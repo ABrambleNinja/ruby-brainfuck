@@ -35,24 +35,11 @@ module Brainfuck
     memory = (1..MEMORY_SIZE/8).map { Cell.new(8) } # initialize memory to represent MEMORY_SIZE number of "bytes"
     pointer = 0 # index of memory that the pointer is currently at
 
-    #code.each do |command|
-      #process_command(command, pointer, memory)
-    #end
-    #for index in 0..code.length
-      #command = code[index]
-      #new_pointer = process_command(command, pointer, memory)
-      #pointer = new_pointer if new_pointer
-    #end
     code_pointer = 0
     while code_pointer < code.length
       command = code[code_pointer]
       pointer, memory, new_code_pointer = process_command(command, pointer, memory, code.join, code_pointer)
       code_pointer = new_code_pointer if new_code_pointer
-#      p memory.map(&:value)[0..10]
-#      puts "Index: #{index}, Pointer: #{pointer}, new_index: #{new_index}"
-#      if index == 14
-#        binding.pry
-#      end
       code_pointer += 1
     end
     nil
