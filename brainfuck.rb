@@ -44,7 +44,7 @@ module Brainfuck
     end
     nil
   end
-  #private
+  private
   def self.process_command(command, pointer, memory, code, code_pointer)
     new_index = nil
     case command
