@@ -1,9 +1,9 @@
-This is the beginning of my attempt at a Brainfuck interpreter in Ruby. Currently, it only supports the commands <>.,+-, but I aim to eventually support loops as well.
+This is my attempt at a Brainfuck interpreter in Ruby. As far as I know, it's fully functional.
 
-Here's some sample code:
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
-This prints out the letter 'd'.
+To run a program, store the Brainfuck code in a string and call Brainfuck::run on it. Here's an example:
 
-At this point in development, the program creates a module called Brainfuck that has a method, run, that takes a string of Brainfuck code and evaluates it. If you simply run the ruby file, it will open up pry, which is similar to irb but embeddable in the code, for testing purposes.
+Brainfuck::run("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.") # code from Wikipedia
 
-This code is released under the MIT license <abrambleninja.mit-license.org>
+prints Hello World!
+
+The code is currently pretty messy, but I will be working on cleaning it up shortly. I first wanted to get the basic algorithm working.
