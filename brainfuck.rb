@@ -23,7 +23,7 @@ module Brainfuck
     def decrement
       @value -= 1
       if @value < 0
-        @value += @max_value + 1 # -1 should overflow to 255
+        @value += @max_value + 1 # -1 should underflow to 255
       end
       value
     end
@@ -35,12 +35,12 @@ module Brainfuck
     memory = (1..MEMORY_SIZE/8).map { Cell.new(8) } # initialize memory to represent MEMORY_SIZE number of "bytes"
     pointer = 0 # index of memory that the pointer is currently at
 
-    code_pointer = 0
-    while code_pointer < code.length
-      command = code[code_pointer]
-      pointer, memory, new_code_pointer = process_command(command, pointer, memory, code.join, code_pointer)
-      code_pointer = new_code_pointer if new_code_pointer
-      code_pointer += 1
+    code_pointer = 0 # start at beginning
+    while code_pointer < code.length # until we've reached the end
+      command = code[code_pointer] # grab the current command
+      pointer, memory, new_code_pointer = process_command(command, pointer, memory, code.join, code_pointer) # process it
+      code_pointer = new_code_pointer if new_code_pointer # if we're supposed to jump, do it
+      code_pointer += 1 # move to next character
     end
     nil
   end
@@ -63,11 +63,11 @@ module Brainfuck
     when "-"
       memory[pointer].decrement
     when "["
-      new_index = find_corresponding_bracket(code_pointer, code) if memory[pointer].value == 0
+      new_index = find_corresponding_bracket(code_pointer, code) if memory[pointer].value == 0 # jump to matching ] if we're at a 0 cell
     when "]"
-      new_index = find_corresponding_bracket(code_pointer, code) if memory[pointer].value != 0
+      new_index = find_corresponding_bracket(code_pointer, code) if memory[pointer].value != 0 # jump to matching [ unless we're at a 0 cell
     end
-    return [pointer, memory, new_index]
+    return [pointer, memory, new_index] # returns modified? memory, pointer and also new index or nil if it stays the same
   end
   def self.find_corresponding_bracket(code_pointer, code) # pointer should point to either a [ or ]
     if code[code_pointer] == '['
